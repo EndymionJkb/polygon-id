@@ -6,11 +6,13 @@ const { KYCAgeCredential } = require("./vcHelpers/KYCAgeCredential");
 const humanReadableAuthReason = "Must be born before this year";
 
 const credentialSubject = {
-  birthday: {
-    // users must be born before this year
-    // birthday is less than Jan 1, 2023
-    $lt: 20230101,
+  // documentType = weighted sum of L1 carbon credits, shared with L2 through Hyperlane
+  // We want to have greater than 10 credits (100 = 10.0)
+  // The sample account has 42.2, so should pass.
+  documentType: {
+    $gt: 100,
   },
+};
 };
 
 const proofRequest = KYCAgeCredential(credentialSubject);
